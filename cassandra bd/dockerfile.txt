@@ -1,0 +1,9 @@
+
+docker run --name cassandra -d --network cassandra_net -p 9042:9042 -v cassandra-data:/var/lib/cassandra cassandra:latest
+
+docker run -d --name cassandra-node1   --network cassandra_net   -p 9042:9042   -v cassandra-data1:/var/lib/cassandra -e CASSANDRA_CLUSTER_NAME:"MiCluster"  cassandra:latest
+
+
+docker run -d --name cassandra-node2   --network cassandra_net   -e CASSANDRA_SEEDS="cassandra-node1"   -e CASSANDRA_LISTEN_ADDRESS_AUTO=true   -e CASSANDRA_BROADCAST_ADDRESS_AUTO=true   -v cassandra-data2:/var/lib/cassandra   -e CASSANDRA_CLUSTER_NAME:"MiCluster" -p 9043:9042  cassandra:latest
+
+
