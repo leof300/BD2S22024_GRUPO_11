@@ -1,0 +1,68 @@
+docker run -d --name my-mongo -p 27017:27017 -v mongo-data:/data/db -e MONGO_INITDB_ROOT_USERNAME=root -e MONGO_INITDB_ROOT_PASSWORD=example mongo:latest
+
+
+jdbc:mongodb://localhost:27017/biblioteca
+
+root
+example
+
+HERRAMIENTAS NECESARIAS
+https://www.mongodb.com/docs/database-tools/installation/installation-windows/
+https://www.mongodb.com/docs/mongodb-shell/install/?msockid=3d6ec787804569020006d5318134680b
+
+IMPORTS
+mongoimport --uri "mongodb://localhost:27017" --username root --password example --authenticationDatabase admin --db biblioteca --collection usuarios  --type csv --file "C:\Users\erikf\OneDrive\Bases Datos 2\Laboratorio\Proyecto2\usuarios.csv" --headerline
+mongoimport --uri "mongodb://localhost:27017" --username root --password example --authenticationDatabase admin --db biblioteca --collection libros  --type csv --file "C:\Users\erikf\OneDrive\Bases Datos 2\Laboratorio\Proyecto2\libros.csv" --headerline
+mongoimport --uri "mongodb://localhost:27017" --username root --password example --authenticationDatabase admin --db biblioteca --collection autores  --type csv --file "C:\Users\erikf\OneDrive\Bases Datos 2\Laboratorio\Proyecto2\autores.csv" --headerline
+
+
+CONECTARSE MONGOSHE
+mongosh "mongodb://localhost:27017" -u root -p example --authenticationDatabase admin
+
+
+mongosh "mongodb://localhost:27017" -u root -p example --authenticationDatabase admin
+
+
+
+db.libros.find()
+db.autores.find()
+db.usuarios.find()
+
+
+db.libros.countDocuments()
+db.autores.countDocuments()
+db.usuarios.countDocuments()
+
+Eliminar coleccion
+db.autores.drop()
+
+
+CRUD 
+
+db.autores.updateOne(
+    { nombre: "Gabriel Garcia Marquez" }, // Filtro para encontrar al autor
+    { $set: { nacionalidad: "Colombiana" } } // Actualización: cambia la nacionalidad
+)
+
+db.libros.insertOne({
+    titulo: "Cien Años de Soledad",
+    autor: "Gabriel Garcia Marquez",
+    anio_publicacion: 1967,
+    genero: "Realismo Mágico",
+    paginas: 417
+})
+
+db.libros.insertMany([
+    { titulo: "El otoño del patriarca", autor: "Gabriel Garcia Marquez", anio_publicacion: 1975, genero: "Realismo Mágico", paginas: 255 },
+    { titulo: "Crónica de una muerte anunciada", autor: "Gabriel Garcia Marquez", anio_publicacion: 1981, genero: "Novela", paginas: 122 }
+])
+
+
+db.usuarios.deleteOne({ nombre: "Juan Perez" })
+
+
+db.usuarios.deleteMany({ edad: { $lt: 18 } })
+
+
+mongoimport --uri "mongodb://localhost:27017" --username root --password example --authenticationDatabase admin --db biblioteca --collection autores  --type csv --file "C:\Users\erikf\OneDrive\Bases Datos 2\Laboratorio\Proyecto2\autores_with_mongo_id.csv" --headerline
+
